@@ -10,7 +10,7 @@ import UIKit
 
 class FirstViewController: UIViewController , UITableViewDataSource, UITableViewDelegate{
     
-    var items:NSMutableArray = []
+    var items:[String] = []
     
     
     internal func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
@@ -24,12 +24,7 @@ class FirstViewController: UIViewController , UITableViewDataSource, UITableView
     
     internal func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
         let cell = UITableViewCell(style: UITableViewCellStyle.default , reuseIdentifier: "Cell")
-        var cellLabel = ""
-        if let tempLabel = items[indexPath.row] as? String{
-            cellLabel = tempLabel
-            
-        }
-        cell.textLabel?.text = cellLabel
+        cell.textLabel?.text = items[indexPath.row]
         
         
         return cell
@@ -41,11 +36,13 @@ class FirstViewController: UIViewController , UITableViewDataSource, UITableView
     }
     
     override func viewDidAppear(_ animated: Bool) {
+       
+        
         let itemsObject = UserDefaults.standard.object(forKey: "items")
         
         
         
-        if let tempitems = itemsObject as? NSMutableArray {
+        if let tempitems = itemsObject as? [String] {
             items = tempitems
             
             
@@ -54,6 +51,18 @@ class FirstViewController: UIViewController , UITableViewDataSource, UITableView
         
     }
 
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        
+        if editingStyle == UITableViewCellEditingStyle.delete{
+            items.remove(at: indexPath.row)
+            table.reloadData()
+            UserDefaults.standard.set(items, forKey: "items")
+            
+        }
+    }
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
