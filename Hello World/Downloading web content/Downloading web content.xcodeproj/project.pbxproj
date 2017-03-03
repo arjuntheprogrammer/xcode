@@ -22,6 +22,7 @@
 		BE3745531E6994AC00A4046F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BE3745561E6994AC00A4046F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BE3745581E6994AC00A4046F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BE3745601E699FC300A4046F /* WorkingwithStrings.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = WorkingwithStrings.playground; path = ../../WorkingwithStrings.playground; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +57,7 @@
 			children = (
 				BE37454C1E6994AC00A4046F /* AppDelegate.swift */,
 				BE37454E1E6994AC00A4046F /* ViewController.swift */,
+				BE3745601E699FC300A4046F /* WorkingwithStrings.playground */,
 				BE3745501E6994AC00A4046F /* Main.storyboard */,
 				BE3745531E6994AC00A4046F /* Assets.xcassets */,
 				BE3745551E6994AC00A4046F /* LaunchScreen.storyboard */,
