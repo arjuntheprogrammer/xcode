@@ -10,6 +10,28 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBAction func Fade(_ sender: Any) {
+        image.alpha = 0
+        UIView.animate(withDuration: 1, animations: {
+            self.image.alpha = 1
+        })
+        
+    }
+    @IBAction func Slide(_ sender: Any) {
+        image.center = CGPoint(x: image.center.x - 500 , y: image.center.y)
+        UIView.animate(withDuration:2){
+            self.image.center = CGPoint(x: self.image.center.x + 500 , y: self.image.center.y)
+            
+        }
+    }
+    @IBAction func Grow(_ sender: Any) {
+        image.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
+        UIView.animate(withDuration:2){
+            self.image.frame = CGRect(x: 0, y: 0, width: 200, height: 200)
+            
+        }
+        
+    }
     @IBOutlet weak var button: UIButton!
     var counter = 1
     var timer = Timer()
