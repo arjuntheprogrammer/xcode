@@ -14,6 +14,20 @@ class ViewController: UIViewController, MKMapViewDelegate {
 
     @IBOutlet weak var map: MKMapView!
     
+    func longpress(gestureRecognizer: UIGestureRecognizer){
+        let touchPoint = gestureRecognizer.location(in: self.map)
+        let coordinate = map.convert(touchPoint, toCoordinateFrom: self.map)
+        
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = coordinate
+        annotation.title = "New place"
+        
+        annotation.subtitle = "may be ill here"
+        
+        map.addAnnotation(annotation)
+        
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,10 +47,23 @@ class ViewController: UIViewController, MKMapViewDelegate {
         let region: MKCoordinateRegion = MKCoordinateRegion(center: location, span: span)
         map.setRegion(region, animated: true)
         
+        let annotation = MKPointAnnotation()
+        
+        annotation.title = "Taj Mahal"
+        annotation.subtitle = "located in Agra"
+        annotation.coordinate = location
+        map.addAnnotation(annotation)
+        
+        let uiLongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(ViewController.longpress(gestureRecognizer:)))
+        uiLongPressGestureRecognizer.minimumPressDuration = 2
+        map.addGestureRecognizer(uiLongPressGestureRecognizer)
+        
+        
         
         
         
     }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
