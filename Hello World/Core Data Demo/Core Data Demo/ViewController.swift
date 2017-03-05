@@ -17,13 +17,13 @@ class ViewController: UIViewController {
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext
-        
+        /*
         let newUser = NSEntityDescription.insertNewObject(forEntityName: "Users", into: context)
         
-        newUser.setValue("komal", forKey: "username")
+        newUser.setValue("Praghav", forKey: "username")
         newUser.setValue("myPass", forKey: "password")
-        newUser.setValue(21, forKey: "age")
-        
+        newUser.setValue(2, forKey: "age")
+ 
         do{
             try context.save()
             print("saved")
@@ -32,8 +32,13 @@ class ViewController: UIViewController {
         catch{
             print("there was an error")
         }
+        */
         
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Users")
+        
+        //request.predicate = NSPredicate(format: "username = %@", "Praghav")
+    
+        
         request.returnsObjectsAsFaults = false
         
         do{
@@ -42,7 +47,14 @@ class ViewController: UIViewController {
                 for result in results as! [NSManagedObject]{
                     if let username = result.value(forKey: "username") as? String{
                         print(username)
-                        
+//                        result.setValue("Dooley", forKey: "username")
+//                        
+//                        do{
+//                            try context.save()
+//                        }
+//                        catch{
+//                            print("rename failed")
+//                        }
                     }
                 }
             }
