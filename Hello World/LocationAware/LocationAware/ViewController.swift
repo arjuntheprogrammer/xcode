@@ -38,7 +38,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
         CLGeocoder().reverseGeocodeLocation(location) { (placemarks, error) in
             if error != nil{
-                print(error)
+                print(error!)
             }
             else{
                 if let placemark = placemarks?[0]{
