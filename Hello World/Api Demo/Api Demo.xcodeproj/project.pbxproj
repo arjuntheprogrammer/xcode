@@ -12,6 +12,7 @@
 		BE013B1C1E6C83A000B527B2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE013B1A1E6C83A000B527B2 /* Main.storyboard */; };
 		BE013B1E1E6C83A000B527B2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE013B1D1E6C83A000B527B2 /* Assets.xcassets */; };
 		BE013B211E6C83A000B527B2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE013B1F1E6C83A000B527B2 /* LaunchScreen.storyboard */; };
+		BE013B291E6C8AA100B527B2 /* weather.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BE013B281E6C8AA100B527B2 /* weather.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		BE013B1D1E6C83A000B527B2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BE013B201E6C83A000B527B2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BE013B221E6C83A000B527B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BE013B281E6C8AA100B527B2 /* weather.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = weather.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 				BE013B1A1E6C83A000B527B2 /* Main.storyboard */,
 				BE013B1D1E6C83A000B527B2 /* Assets.xcassets */,
 				BE013B1F1E6C83A000B527B2 /* LaunchScreen.storyboard */,
+				BE013B281E6C8AA100B527B2 /* weather.jpg */,
 				BE013B221E6C83A000B527B2 /* Info.plist */,
 			);
 			path = "Api Demo";
@@ -124,6 +127,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BE013B211E6C83A000B527B2 /* LaunchScreen.storyboard in Resources */,
+				BE013B291E6C8AA100B527B2 /* weather.jpg in Resources */,
 				BE013B1E1E6C83A000B527B2 /* Assets.xcassets in Resources */,
 				BE013B1C1E6C83A000B527B2 /* Main.storyboard in Resources */,
 			);
