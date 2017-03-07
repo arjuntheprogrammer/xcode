@@ -47,28 +47,33 @@ class UserTableViewController: UITableViewController {
                     for object in users{
                         
                         if let user = object as? PFUser{
-                            let u = user.username!.components(separatedBy: "@")
-                            self.usernames.append(u[0] as String)
-                            self.userIds.append(user.objectId!)
-                            
-                            let query = PFQuery(className: "Followers")
-                            query.whereKey("follower", equalTo: PFUser.current()?.objectId!)
-                            query.whereKey("following", equalTo: user.objectId!)
-                            query.findObjectsInBackground(block: { (objects, error) in
-                                if let objects = objects{
-                                    if objects.count>0{
-                                        self.isFollowing[user.objectId!] = true
-                                        
+                            if user.objectId != PFUser.current()?.objectId{
+                                
+                                
+                                
+                                let u = user.username!.components(separatedBy: "@")
+                                self.usernames.append(u[0] as String)
+                                self.userIds.append(user.objectId!)
+                                
+                                let query = PFQuery(className: "Followers")
+                                query.whereKey("follower", equalTo: PFUser.current()?.objectId!)
+                                query.whereKey("following", equalTo: user.objectId!)
+                                query.findObjectsInBackground(block: { (objects, error) in
+                                    if let objects = objects{
+                                        if objects.count>0{
+                                            self.isFollowing[user.objectId!] = true
+                                            
+                                        }
+                                        else{
+                                            self.isFollowing[user.objectId!] = false
+                                            
+                                        }
+                                        if self.isFollowing.count == self.usernames.count{
+                                            self.tableView.reloadData()
+                                        }
                                     }
-                                    else{
-                                        self.isFollowing[user.objectId!] = false
-                                        
-                                    }
-                                    if self.isFollowing.count == self.usernames.count{
-                                        self.tableView.reloadData()
-                                    }
-                                }
-                            })
+                                })
+                            }
                             
                             
                             
