@@ -16,22 +16,36 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        let user = PFObject(className : "Users")
-        user["name"] = "Arjun"
-        user.saveInBackground { (success, error) in
-            if success {
-                print("Object saved")
+//        let user = PFObject(className : "Users")
+//        user["name"] = "Arjun"
+//        user.saveInBackground { (success, error) in
+//            if success {
+//                print("Object saved")
+//            }
+//            else{
+//                if let error = error{
+//                    print(error)
+//                }
+//                else{
+//                    print("Error")
+//                }
+//            }
+//        }
+        
+        
+        
+        let query = PFQuery(className: "Users")
+        query.getObjectInBackground(withId: "KJeHbn3Xt2") { (object, error) in
+            if error != nil{
+                print(error)
             }
             else{
-                if let error = error{
-                    print(error)
-                }
-                else{
-                    print("Error")
+                if let user = object{
+                    print(user)
+                    print(user["name"])
                 }
             }
         }
-        
         
     }
 
