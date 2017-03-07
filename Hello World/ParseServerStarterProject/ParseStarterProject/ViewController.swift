@@ -14,7 +14,8 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        //insert
         
 //        let user = PFObject(className : "Users")
 //        user["name"] = "Arjun"
@@ -32,7 +33,20 @@ class ViewController: UIViewController {
 //            }
 //        }
         
+          //retrieve
         
+//        let query = PFQuery(className: "Users")
+//        query.getObjectInBackground(withId: "KJeHbn3Xt2") { (object, error) in
+//            if error != nil{
+//                print(error)
+//            }
+//            else{
+//                if let user = object{
+//                    print(user)
+//                    print(user["name"])
+//                }
+//            }
+//        }
         
         let query = PFQuery(className: "Users")
         query.getObjectInBackground(withId: "KJeHbn3Xt2") { (object, error) in
@@ -41,11 +55,22 @@ class ViewController: UIViewController {
             }
             else{
                 if let user = object{
-                    print(user)
-                    print(user["name"])
+                   user["name"] = "komal"
+                    user.saveInBackground(block: { (success, error) in
+                        if success{
+                            print("saved")
+                        }
+                        else{
+                            print(error)
+                            
+                        }
+                    })
                 }
             }
         }
+
+        
+        
         
     }
 
