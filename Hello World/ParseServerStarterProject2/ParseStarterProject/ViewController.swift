@@ -34,6 +34,15 @@ class ViewController: UIViewController {
         
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        if PFUser.current() != nil{
+            performSegue(withIdentifier: "showUserTable", sender: self)
+
+        }
+        self.navigationController?.navigationBar.isHidden = true
+
+    }
+    
     @IBOutlet var messageLabel: UILabel!
     @IBOutlet weak var signupOrLogin: UIButton!
     
@@ -63,7 +72,7 @@ class ViewController: UIViewController {
                 
                 
             if signupMode{
-                //signUp mode
+                //signUp mode 
                 let user = PFUser()
                 user.username = emailTextField.text
                 user.email = emailTextField.text
@@ -88,6 +97,9 @@ class ViewController: UIViewController {
                     else{
                         print("user signed up")
                         
+                        self.performSegue(withIdentifier: "showUserTable", sender: self)
+
+                        
                         
                     }
                 })
@@ -111,6 +123,8 @@ class ViewController: UIViewController {
                     }
                     else{
                         print("Logged in")
+                        self.performSegue(withIdentifier: "showUserTable", sender: self)
+
                     }
                 })
             }
