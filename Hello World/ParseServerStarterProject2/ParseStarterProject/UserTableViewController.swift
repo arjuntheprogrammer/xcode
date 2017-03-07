@@ -15,7 +15,7 @@ class UserTableViewController: UITableViewController {
     var userIds = [""]
     var isFollowing = ["": false]
     
-    
+    var refresher: UIRefreshControl!
     
     @IBAction func Logout(_ sender: Any) {
         PFUser.logOut()
@@ -26,10 +26,10 @@ class UserTableViewController: UITableViewController {
     override func viewDidAppear(_ animated: Bool) {
         self.navigationController?.navigationBar.isHidden = false
     }
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        
+    
+    
+    func refresh(){
+        print("in refresh")
         let query = PFUser.query()
         query?.findObjectsInBackground(block: { (objects, error) in
             if error != nil{
@@ -70,6 +70,7 @@ class UserTableViewController: UITableViewController {
                                         }
                                         if self.isFollowing.count == self.usernames.count{
                                             self.tableView.reloadData()
+                                            self.refresher.endRefreshing()
                                         }
                                     }
                                 })
@@ -85,12 +86,16 @@ class UserTableViewController: UITableViewController {
             }
             
         })
-        
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
+    }
 
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        refresh()
+        refresher = UIRefreshControl()
+        refresher.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refresher.addTarget(self, action: #selector(UserTableViewController.refresh), for: UIControlEvents.valueChanged)
+        tableView.addSubview(refresher)
+        
     }
 
     override func didReceiveMemoryWarning() {
