@@ -11,6 +11,12 @@ import Parse
 
 class UserTableViewController: UITableViewController {
 
+    var usernames = [""]
+    var userIds = [""]
+    var isFollowing = ["": false]
+    
+    
+    
     @IBAction func Logout(_ sender: Any) {
         PFUser.logOut()
         performSegue(withIdentifier: "logoutSegue", sender: self)
@@ -23,6 +29,58 @@ class UserTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
+        let query = PFUser.query()
+        query?.findObjectsInBackground(block: { (objects, error) in
+            if error != nil{
+                print(error!)
+                
+            }
+            else{
+                if let users = objects{
+                    self.usernames.removeAll()
+                    self.userIds.removeAll()
+                    self.isFollowing.removeAll()
+                    
+                    
+                    
+                    for object in users{
+                        
+                        if let user = object as? PFUser{
+                            let u = user.username!.components(separatedBy: "@")
+                            self.usernames.append(u[0] as String)
+                            self.userIds.append(user.objectId!)
+                            
+                            let query = PFQuery(className: "Followers")
+                            query.whereKey("follower", equalTo: PFUser.current()?.objectId!)
+                            query.whereKey("following", equalTo: user.objectId!)
+                            query.findObjectsInBackground(block: { (objects, error) in
+                                if let objects = objects{
+                                    if objects.count>0{
+                                        self.isFollowing[user.objectId!] = true
+                                        
+                                    }
+                                    else{
+                                        self.isFollowing[user.objectId!] = false
+                                        
+                                    }
+                                    if self.isFollowing.count == self.usernames.count{
+                                        self.tableView.reloadData()
+                                    }
+                                }
+                            })
+                            
+                            
+                            
+                            
+                        }
+                        
+                    }
+                }
+            }
+            
+        })
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -44,18 +102,35 @@ class UserTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 4
+        return usernames.count
+        
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        cell.textLabel?.text = "Test"
+        cell.textLabel?.text = usernames[indexPath.row]
+        
+        if isFollowing[userIds[indexPath.row]]!{
+            cell.accessoryType = UITableViewCellAccessoryType.checkmark
+            
+        }
+        
         // Configure the cell...
 
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        cell?.accessoryType = UITableViewCellAccessoryType.checkmark
+        let following = PFObject(className: "Followers")
+        following["follower"] = PFUser.current()?.objectId
+        following["following"] = userIds[indexPath.row]
+        
+        following.saveInBackground()
+        
+    }
 
     /*
     // Override to support conditional editing of the table view.
