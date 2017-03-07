@@ -67,16 +67,12 @@ class PostViewController: UIViewController, UINavigationControllerDelegate, UIIm
         let post = PFObject(className: "Posts")
         post["message"] = messageTextField.text
         post["useiId"] =  PFUser.current()?.objectId!
-        print("here1")
         
         let imageData = UIImageJPEGRepresentation(imageToPost.image!, 0.1)
-        print("here2")
         
         let imageFile = PFFile(name: "image.png", data: imageData!)
-        print("here3")
         
         post["imageFile"] = imageFile
-        print("here1")
         
         post.saveInBackground { (success, error) in
             
