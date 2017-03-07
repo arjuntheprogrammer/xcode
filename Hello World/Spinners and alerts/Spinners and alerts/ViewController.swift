@@ -42,11 +42,15 @@ class ViewController: UIViewController {
         
         activityIndicator.startAnimating()
         
+        //UIApplication.shared.beginIgnoringInteractionEvents()
+        
+        
     
     }
     @IBAction func restoreApp(_ sender: Any) {
         
-        activityIndicator.stopAnimating()
+        UIApplication.shared.endIgnoringInteractionEvents()
+        //activityIndicator.stopAnimating()
         
     }
     override func viewDidLoad() {
