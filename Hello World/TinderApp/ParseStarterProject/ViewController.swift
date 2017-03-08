@@ -31,6 +31,9 @@ class ViewController: UIViewController {
             
             let acl = PFACL()
             acl.getPublicWriteAccess = true
+            user.acl = acl
+            
+            
             
             user.signUpInBackground { (succedd, error) in
             
@@ -49,6 +52,7 @@ class ViewController: UIViewController {
                 }
                 else{
                     print("Signed Up!!")
+                    self.performSegue(withIdentifier: "goToUserInfo", sender: self)
                 }
                 
             }
@@ -70,6 +74,8 @@ class ViewController: UIViewController {
                 }
                 else{
                     print("Logged In!!")
+                    self.performSegue(withIdentifier: "goToUserInfo", sender: self)
+
                 }
                 
             })
@@ -98,6 +104,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        
         
     }
 

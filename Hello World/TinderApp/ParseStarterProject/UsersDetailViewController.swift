@@ -17,6 +17,26 @@ class UsersDetailViewController: UIViewController, UINavigationControllerDelegat
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        if let isFemale = PFUser.current()?["isFemale"]{
+            genderSwitch.setOn(isFemale as! Bool, animated: false)
+            
+        }
+        if let isInterestedInWoman = PFUser.current()?["isInterestedInWoman"]{
+            interestedInSwitch.setOn(isInterestedInWoman as! Bool, animated: false)
+            
+        }
+        if let photo = PFUser.current()?["photo"] as? PFFile{
+            photo.getDataInBackground(block: { (data, error) in
+                if let imageData = data{
+                    if let downloadedImage = UIImage(data: imageData){
+                        self.userImage.image = downloadedImage
+                        
+                    }
+                }
+            })
+        }
+        
     }
 
     @IBOutlet weak var errorLabel: UILabel!

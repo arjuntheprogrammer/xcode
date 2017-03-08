@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ParseStarterProject/UsersDetailViewController.swift"
-            timestampString = "510685126.03406"
+            timestampString = "510685946.319683"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "49"
-            endingLineNumber = "49"
+            startingLineNumber = "69"
+            endingLineNumber = "69"
             landmarkName = "update(_:)"
             landmarkType = "7">
          </BreakpointContent>
