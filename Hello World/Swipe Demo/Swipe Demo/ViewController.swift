@@ -37,9 +37,11 @@ class ViewController: UIViewController {
         let xFromCenter = label.center.x - self.view.bounds.width / 2
         
         
-        let rotation = CGAffineTransform(rotationAngle: xFromCenter / 200)
+        var rotation = CGAffineTransform(rotationAngle: xFromCenter / 200)
         
-        let streatchAndRotation = rotation.scaledBy(x: 0.9, y: 0.9)
+        let scale = min(abs(100 / xFromCenter),1)
+        
+        var streatchAndRotation = rotation.scaledBy(x: scale, y: scale)
         label.transform = streatchAndRotation
         
         
@@ -50,6 +52,11 @@ class ViewController: UIViewController {
             else if label.center.x > self.view.bounds.width - 100{
                 print("chosen")
             }
+            
+            rotation = CGAffineTransform(rotationAngle: 0)
+            streatchAndRotation = rotation.scaledBy(x: 1, y: 1)
+            label.transform = streatchAndRotation
+            
             label.center = CGPoint(x: self.view.bounds.width / 2 , y: self.view.bounds.height/2)
         }
         //print(translation)
