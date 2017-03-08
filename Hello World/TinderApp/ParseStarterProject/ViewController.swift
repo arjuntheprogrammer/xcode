@@ -24,10 +24,16 @@ class ViewController: UIViewController {
     @IBOutlet weak var errorLabel: UILabel!
     @IBAction func signUpOrLogin(_ sender: Any) {
         if signMode{
+            
             let user = PFUser()
             user.username = usernameField.text
             user.password = passwordField.text
+            
+            let acl = PFACL()
+            acl.getPublicWriteAccess = true
+            
             user.signUpInBackground { (succedd, error) in
+            
                 if error != nil{
                     var errorMessage = "SignUp failed, try again!"
                     let error = error as NSError?
@@ -69,6 +75,7 @@ class ViewController: UIViewController {
             })
         }
         
+        
     }
     
     @IBOutlet weak var changeSignupmodeButton: UIButton!
@@ -92,35 +99,14 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        let testObject = PFObject(className: "TestObject2")
-        
-        testObject["foo"] = "bar"
-        
-        testObject.saveInBackground { (success, error) -> Void in
-            
-            // added test for success 11th July 2016
-            
-            if success {
-                
-                print("Object has been saved.")
-                
-            } else {
-                
-                if error != nil {
-                    
-                    print (error)
-                    
-                } else {
-                    
-                    print ("Error")
-                }
-                
-            }
-            
-        }
-        
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        if PFUser.current() != nil{
+            performSegue(withIdentifier: "goToUserInfo", sender: self)
+            
+        }
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
