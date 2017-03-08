@@ -31,6 +31,8 @@ class ViewController: UIViewController {
             
             let acl = PFACL()
             acl.getPublicWriteAccess = true
+            acl.getPublicReadAccess = true
+            
             user.acl = acl
             
             

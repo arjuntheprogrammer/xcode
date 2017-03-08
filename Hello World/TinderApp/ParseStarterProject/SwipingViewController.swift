@@ -13,6 +13,8 @@ import Parse
 class SwipingViewController: UIViewController {
 
     @IBOutlet weak var imageView: UIImageView!
+    var displayedUserID = ""
+    
     
     
     func wasDragged(gestureRecognizer: UIPanGestureRecognizer ){
@@ -33,11 +35,27 @@ class SwipingViewController: UIViewController {
         
         
         if gestureRecognizer.state == UIGestureRecognizerState.ended{
+            
+            var acceptedOrRejected = ""
+            
+        
             if label.center.x < 100{
+                acceptedOrRejected = "rejected"
                 print("not chosen")
+                
             }
             else if label.center.x > self.view.bounds.width - 100{
+                acceptedOrRejected = "accepted"
                 print("chosen")
+            }
+            
+            if acceptedOrRejected != "" && displayedUserID != ""{
+                PFUser.current()?.addUniqueObjects(from: [displayedUserID], forKey: acceptedOrRejected)
+                PFUser.current()?.saveInBackground(block: { (success, error) in
+                    self.updateImage()
+                    
+                })
+                updateImage()
             }
             
             rotation = CGAffineTransform(rotationAngle: 0)
@@ -49,7 +67,48 @@ class SwipingViewController: UIViewController {
         //print(translation)
     }
     
-    func 
+    func updateImage(){
+        let query = PFUser.query()
+        query?.whereKey("isFemale", equalTo: (PFUser.current()?["isInterestedInWomen"])!)
+        query?.whereKey("isInterestedInWomen", equalTo: (PFUser.current()?["isFemale"])!)
+        
+        var ignoredUsers = [""]
+        if let acceptedUser = PFUser.current()?["accepted"]{
+            ignoredUsers += acceptedUser as! Array
+            
+        }
+        if let rejectedUser = PFUser.current()?["rejected"]{
+            ignoredUsers += rejectedUser as! Array
+            
+        }
+        
+        query?.whereKey("objectId", notContainedIn: ignoredUsers)
+        
+        query?.limit = 1
+        
+        query?.findObjectsInBackground(block: { (objects, error) in
+            if let users = objects{
+                for object in users{
+                    if let user = object as? PFUser{
+                        
+                        self.displayedUserID = user.objectId!
+                        
+                        let imageFile = user["photo"] as! PFFile
+                        
+                        imageFile.getDataInBackground(block: { (data, error) in
+                            if let imageData = data{
+                                self.imageView.image = UIImage(data: imageData)
+                                
+                            }
+                        })
+                    }
+            }
+            }
+        })
+        
+        
+        
+    }
     
     
     override func viewDidLoad() {
@@ -59,7 +118,7 @@ class SwipingViewController: UIViewController {
         imageView.isUserInteractionEnabled = true
         imageView.addGestureRecognizer(gesture)
 
-
+        updateImage()
         // Do any additional setup after loading the view.
     }
 
