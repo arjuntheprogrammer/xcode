@@ -37,43 +37,43 @@ class UsersDetailViewController: UIViewController, UINavigationControllerDelegat
             })
         }
         
-        
-        let urlArray = ["http://magicdisneyheros.altervista.org/images/midl/97.jpg", "http://images4.wikia.nocookie.net/__cb20121226232915/disney/images/thumb/e/e0/Pocahontascape.jpg/500px-Pocahontascape.jpg", "https://image.freepik.com/free-vector/woman-cartoon-character_23-2147502478.jpg", "https://img.clipartfox.com/b9ec80b7b3a3e7d97624f102dca557d4_-black-female-cartoon-african-american-cartoon-characters-female_300-265.png", "https://s-media-cache-ak0.pinimg.com/564x/78/97/3f/78973f7e1799871436f21f96af125b2e.jpg", "https://s-media-cache-ak0.pinimg.com/736x/9c/5e/86/9c5e86be6bf91c9dea7bac0ab473baa4.jpg", "https://qph.ec.quoracdn.net/main-qimg-52d6d1667deec55833f5308de7031fc3-c"]
-        var count = 0
-        
-        for urlString in urlArray{
-            count += 1
-            
-            let url = URL(string: urlString)!
-            do{
-                let data = try Data(contentsOf: url)
-                let imageFile = PFFile(name: "user"+String(count)+".png", data: data)
-                
-                let user = PFUser()
-                user["photo"] = imageFile
-                user["username"] = "user"+String(count)
-                user["password"] = "password"
-                user["isInterestedInWomen"] = false
-                user["isFemale"] = true
-
-                let acl = PFACL()
-                acl.getPublicWriteAccess = true
-                user.acl = acl
-                
-
-                user.signUpInBackground(block: { (success, error) in
-                    if success{
-                        print("user signed up!")
-                    }
-                })
-
-
-            }
-            catch{
-                print("could not getr data")
-                
-            }
-        }
+//        
+//        let urlArray = ["http://magicdisneyheros.altervista.org/images/midl/97.jpg", "http://images4.wikia.nocookie.net/__cb20121226232915/disney/images/thumb/e/e0/Pocahontascape.jpg/500px-Pocahontascape.jpg", "https://image.freepik.com/free-vector/woman-cartoon-character_23-2147502478.jpg", "https://img.clipartfox.com/b9ec80b7b3a3e7d97624f102dca557d4_-black-female-cartoon-african-american-cartoon-characters-female_300-265.png", "https://s-media-cache-ak0.pinimg.com/564x/78/97/3f/78973f7e1799871436f21f96af125b2e.jpg", "https://s-media-cache-ak0.pinimg.com/736x/9c/5e/86/9c5e86be6bf91c9dea7bac0ab473baa4.jpg", "https://qph.ec.quoracdn.net/main-qimg-52d6d1667deec55833f5308de7031fc3-c"]
+//        var count = 0
+//        
+//        for urlString in urlArray{
+//            count += 1
+//            
+//            let url = URL(string: urlString)!
+//            do{
+//                let data = try Data(contentsOf: url)
+//                let imageFile = PFFile(name: "user"+String(count)+".png", data: data)
+//                
+//                let user = PFUser()
+//                user["photo"] = imageFile
+//                user["username"] = "user"+String(count)
+//                user["password"] = "password"
+//                user["isInterestedInWomen"] = false
+//                user["isFemale"] = true
+//
+//                let acl = PFACL()
+//                acl.getPublicWriteAccess = true
+//                user.acl = acl
+//                
+//
+//                user.signUpInBackground(block: { (success, error) in
+//                    if success{
+//                        print("user signed up!")
+//                    }
+//                })
+//
+//
+//            }
+//            catch{
+//                print("could not getr data")
+//                
+//            }
+//        }
         
         
         
@@ -129,6 +129,7 @@ class UsersDetailViewController: UIViewController, UINavigationControllerDelegat
             }
             else{
                 print("Updated")
+                self.performSegue(withIdentifier: "showSwipingViewController", sender: self)
             }
             
 

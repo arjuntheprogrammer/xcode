@@ -74,8 +74,7 @@ class ViewController: UIViewController {
                 }
                 else{
                     print("Logged In!!")
-                    self.performSegue(withIdentifier: "goToUserInfo", sender: self)
-
+                    self.redirectUser()
                 }
                 
             })
@@ -107,14 +106,26 @@ class ViewController: UIViewController {
         
         
         
+        
     }
 
     override func viewDidAppear(_ animated: Bool) {
+       redirectUser()
+    }
+    func redirectUser(){
         if PFUser.current() != nil{
-            performSegue(withIdentifier: "goToUserInfo", sender: self)
             
+            if PFUser.current()?["isFemale"] != nil && PFUser.current()?["isInterestedInWomen"] != nil && PFUser.current()?["photo"] != nil {
+                
+                performSegue(withIdentifier: "swipeFromInitialSegue", sender: self)
+            }
+                
+            else{
+                performSegue(withIdentifier: "goToUserInfo", sender: self)
+            }
         }
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
