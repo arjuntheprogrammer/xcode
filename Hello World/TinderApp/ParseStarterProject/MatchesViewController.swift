@@ -10,17 +10,22 @@ import UIKit
 import Parse
 class MatchesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
+    
+    var images = [UIImage]()
+    
     internal func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        return 4
+        return images.count
         
     }
     
    
+    @IBOutlet weak var tableView: UITableView!
+    
     internal func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! MatchesTableViewCell
-        cell.userImageView.image = UIImage(named: "person.png")
+        cell.userImageView.image = images[indexPath.row]
         cell.messageLabel.text = "You haven't any message yet."
         //cell.textLabel?.text = "Test"
         return cell
@@ -33,6 +38,23 @@ class MatchesViewController: UIViewController, UITableViewDelegate, UITableViewD
         let query = PFUser.query()
         query?.whereKey("accepted", contains: PFUser.current()?.objectId)
         query?.whereKey("objectId", containedIn:  PFUser.current()?["accepted"] as! [String])
+        query?.findObjectsInBackground(block: { (objects, error) in
+            if let users = objects{
+                for object in users{
+                    if let user = object as? PFUser{
+                        let imageFile = user["photo"] as! PFFile
+                        
+                        imageFile.getDataInBackground(block: { (data, error) in
+                            if let imageData = data{
+                                self.images.append(UIImage(data: imageData)!)
+                                self.tableView.reloadData()
+                                
+                            }
+                        })
+                    }
+                }
+            }
+        })
         
         
         
