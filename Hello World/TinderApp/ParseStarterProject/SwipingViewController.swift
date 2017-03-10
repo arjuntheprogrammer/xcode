@@ -84,12 +84,20 @@ class SwipingViewController: UIViewController {
         
         query?.whereKey("objectId", notContainedIn: ignoredUsers)
         
+        if let latitude = (PFUser.current()?["location"] as AnyObject).latitude {
+            if let longitude = (PFUser.current()?["location"] as AnyObject).longitude{
+                query?.whereKey("location", withinGeoBoxFromSouthwest: PFGeoPoint(latitude:latitude-10,longitude: longitude-10), toNortheast: PFGeoPoint(latitude:latitude+10,longitude: longitude+10   ))
+            }
+        }
+        
         query?.limit = 1
         
         query?.findObjectsInBackground(block: { (objects, error) in
             if let users = objects{
                 for object in users{
                     if let user = object as? PFUser{
+                        
+                        print("here inside")
                         
                         self.displayedUserID = user.objectId!
                         
@@ -118,6 +126,17 @@ class SwipingViewController: UIViewController {
         imageView.isUserInteractionEnabled = true
         imageView.addGestureRecognizer(gesture)
 
+        PFGeoPoint.geoPointForCurrentLocation { (geopoint, error) in
+            print(geopoint)
+            
+            if let geopoint = geopoint{
+                
+                PFUser.current()?["location"] = geopoint
+                PFUser.current()?.saveInBackground()
+                
+            }
+        }
+        
         updateImage()
         // Do any additional setup after loading the view.
     }
