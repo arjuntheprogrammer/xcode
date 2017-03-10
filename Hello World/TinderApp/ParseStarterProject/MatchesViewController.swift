@@ -13,6 +13,8 @@ class MatchesViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     var images = [UIImage]()
     var userIds = [String]()
+    var messages = [String]()
+    
     
     
     internal func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
@@ -30,6 +32,8 @@ class MatchesViewController: UIViewController, UITableViewDelegate, UITableViewD
         cell.userImageView.image = images[indexPath.row]
         cell.messageLabel.text = "You haven't any message yet."
         cell.userIdLabel.text = userIds[indexPath.row]
+        cell.messageLabel.text = messages[indexPath.row]
+        
         
         //cell.textLabel?.text = "Test"
         return cell
@@ -50,10 +54,32 @@ class MatchesViewController: UIViewController, UITableViewDelegate, UITableViewD
                         
                         imageFile.getDataInBackground(block: { (data, error) in
                             if let imageData = data{
-                                self.images.append(UIImage(data: imageData)!)
-                                self.userIds.append(user.objectId!)
                                 
-                                self.tableView.reloadData()
+                                let messageQuery =  PFQuery(className: "Message")
+                                
+                                messageQuery.whereKey("recipient", equalTo:PFUser.current()?.objectId!)
+                                messageQuery.whereKey("sender", equalTo: user.objectId!)
+                                messageQuery.findObjectsInBackground(block: { (objects, error) in
+                                   var messageText = "No message from this user."
+                                    
+                                    
+                                    if let objects = objects{
+                                        for message in objects{
+                                            if let messageContent = message["content"] as? String{
+                                                messageText = messageContent
+                                            }
+                                            
+                                        }
+                                    }
+                                    
+                                    self.messages.append(messageText)
+                                    self.images.append(UIImage(data: imageData)!)
+                                    self.userIds.append(user.objectId!)
+                                    
+                                    self.tableView.reloadData()
+                                    
+                                    
+                                })
                                 
                             }
                         })
