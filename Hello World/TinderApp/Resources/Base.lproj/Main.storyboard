@@ -304,25 +304,33 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Write a message..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XNi-Ja-AEA">
-                                                    <rect key="frame" x="184" y="148" width="183" height="30"/>
+                                                    <rect key="frame" x="179" y="119" width="183" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qMw-AW-34c">
-                                                    <rect key="frame" x="326" y="186" width="36" height="30"/>
+                                                    <rect key="frame" x="306" y="157" width="36" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <state key="normal" title="Send"/>
                                                     <connections>
                                                         <action selector="send:" destination="AJc-pq-xBq" eventType="touchUpInside" id="7Tt-Nz-aJB"/>
                                                     </connections>
                                                 </button>
+                                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5vG-pD-MRi">
+                                                    <rect key="frame" x="184" y="162" width="0.0" height="0.0"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="messageLabel" destination="dcA-3c-hqY" id="D3M-3e-0vA"/>
                                             <outlet property="messageTextField" destination="XNi-Ja-AEA" id="eF4-Xa-P3B"/>
+                                            <outlet property="userIdLabel" destination="5vG-pD-MRi" id="AEF-MJ-Tl9"/>
                                             <outlet property="userImageView" destination="tZp-HX-jRS" id="8Jg-4N-L2S"/>
                                         </connections>
                                     </tableViewCell>

@@ -12,6 +12,8 @@ class MatchesViewController: UIViewController, UITableViewDelegate, UITableViewD
 
     
     var images = [UIImage]()
+    var userIds = [String]()
+    
     
     internal func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
@@ -27,6 +29,8 @@ class MatchesViewController: UIViewController, UITableViewDelegate, UITableViewD
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! MatchesTableViewCell
         cell.userImageView.image = images[indexPath.row]
         cell.messageLabel.text = "You haven't any message yet."
+        cell.userIdLabel.text = userIds[indexPath.row]
+        
         //cell.textLabel?.text = "Test"
         return cell
     }
@@ -47,6 +51,8 @@ class MatchesViewController: UIViewController, UITableViewDelegate, UITableViewD
                         imageFile.getDataInBackground(block: { (data, error) in
                             if let imageData = data{
                                 self.images.append(UIImage(data: imageData)!)
+                                self.userIds.append(user.objectId!)
+                                
                                 self.tableView.reloadData()
                                 
                             }
